@@ -79,9 +79,9 @@ class Game:
                 return move
     
     def is_out_of_bounds(self, x, y):
-        if x < 0 or x > self.board_size:
+        if x < 0 or x >= self.board_size:
             return True
-        if y < 0 or y > self.board_size:
+        if y < 0 or y >= self.board_size:
             return True
         return False
     
@@ -107,6 +107,7 @@ class Game:
             new_x = self.my_head_x + delta[0]
             new_y = self.my_head_y + delta[1]
             move_rank[move] = 0
+            print(f'possible move {move}=({new_x}, {new_y})')
             if self.is_out_of_bounds(new_x, new_y):
                 print(f'{move}=({new_x}, {new_y}) is out of bounds')
                 move_rank[move] += -100
