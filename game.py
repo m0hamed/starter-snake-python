@@ -231,9 +231,9 @@ class Game:
                 f'{move}=({new_x}, {new_y}) has {count_open_squares} open squares'
             )
             if goal==STARVING:
-                ranking_tuple = (food_distance, -count_open_squares, close_to_wall, close_to_other_head)
+                ranking_tuple = (food_distance, -count_open_squares, close_to_wall)
             else:
-                ranking_tuple = (-count_open_squares, close_to_wall + food_distance, 0, close_to_other_head)
+                ranking_tuple = (-count_open_squares, close_to_wall + food_distance, 0)
             move_rank[move] = ranking_tuple
         print(f'rank_moves elapsted time: {time.time()-s}')
         return move_rank
