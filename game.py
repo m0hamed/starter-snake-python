@@ -37,6 +37,25 @@ def clone_board(old_board):
             new_board[i][j] = old_board[i][j]
     return new_board
 
+#def flood_count(self, real_board, x, y):
+#    queue = [(x,y)]
+#    visited = get_empty_board(len(real_board))
+#    self.set_at(x, y, 1, board=visited)
+#
+#    def bfs(q):
+#        count = 1
+#        while q:
+#            x, y = q.pop(0)
+#            for move, delta in POSSIBLE_MOVES.items():
+#                new_x = x + delta[0]
+#                new_y = y + delta[1]
+#                if self.is_out_of_bounds(new_x, new_y):
+#                    continue
+#                if not self.get_at(new_x, new_y, board=visited) and not self.get_at(new_x, new_y, board=real_board):
+#                    self.set_at(x, y, 1, board=visited)
+#                    q.append((new_x, new_y))
+#        return count
+#    return bfs(queue)
 
 def flood_count(real_board, x, y):
     s = time.time()
@@ -97,8 +116,8 @@ class Game:
                     if self.is_out_of_bounds(new_x, new_y):
                         continue
                     if not self.get_at(new_x, new_y, board=visited):
-                        self.set_at(x, y, distance+1, board=board)
-                        self.set_at(x, y, 1, board=visited)
+                        self.set_at(new_x, new_y, distance+1, board=board)
+                        self.set_at(new_x, new_y, 1, board=visited)
                         q.append((new_x, new_y, distance+1))
         bfs(queue)
         print(f'flood_fill elapsted time: {time.time()-s}')
