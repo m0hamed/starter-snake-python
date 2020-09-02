@@ -15,11 +15,15 @@ POSSIBLE_MOVES = {
 
 class Game:
     def __init__(self, game_state):
+        self.my_head_x = None
+        self.my_head_y = None
+        self.my_snake = None
+        self.my_health = None
         self.board_size = game_state['board']['height']
         self.board = [[0]*self.board_size]*self.board_size
         self._add_food(game_state['board']['food'])
         self._add_snakes(game_state['board']['snakes'])
-        self._set_my_snake(game_state['board']['you'])
+        self._set_my_snake(game_state['you'])
 
     def _add_food(self, food_pos):
         for pos in food_pos:
@@ -42,7 +46,7 @@ class Game:
     
     def to_board_idx(self, x, y):
         board_y = self.board_size-y-1
-        board_x = x
+        board_x = x - 1
         return board_y, board_x
     
     def set_at(self, x, y, value, append=False):
@@ -58,8 +62,8 @@ class Game:
     
     def get_safe_move(self):
         for move, delta in POSSIBLE_MOVES.items():
-            new_x = self.head_x + delta[0]
-            new_y = self.head_y + delta[1]
+            new_x = self.my_head_x + delta[0]
+            new_y = self.my_head_y + delta[1]
             if self.is_out_of_bounds(new_x, new_y):
                 continue
             if self.is_empty(new_x, new_y):
