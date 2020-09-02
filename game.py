@@ -87,8 +87,10 @@ class Game:
     
     def is_close_to_other_head(self, x, y):
         for move, delta in POSSIBLE_MOVES.items():
-            new_x = self.x + delta[0]
-            new_y = self.y + delta[1]
+            new_x = x + delta[0]
+            new_y = y + delta[1]
+            if self.is_out_of_bounds(new_x, new_y):
+                continue
             value = self.get_at(new_x, new_y)
             if value & HEAD and not value & MY_SNAKE:
                 return True
