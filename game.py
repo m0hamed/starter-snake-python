@@ -81,7 +81,18 @@ class Game:
     
     def is_empty(self, x, y):
         return self.get_at(x, y) == 0
+
+    def has_snake(self, x, y):
+        return self.get_at(x, y) == SNAKE
     
+    def is_close_to_other_head(self, x, y):
+        for move, delta in POSSIBLE_MOVES.items():
+            new_x = self.x + delta[0]
+            new_y = self.y + delta[1]
+            value = self.get_at(new_x, new_y)
+            if value & HEAD and not value & MY_SNAKE:
+                return True
+
     def rank_moves(self, goal=STAY_ALIVE):
         move_rank = {}
         for move, delta in POSSIBLE_MOVES.items():
@@ -89,16 +100,17 @@ class Game:
             new_y = self.my_head_y + delta[1]
             if self.is_out_of_bounds(new_x, new_y):
                 move_rank[move] = -100
-                continue
-            if self.is_empty(new_x, new_y):
-                move_rank[move] = 0
-                continue
             if self.get_at(new_x, new_y) & FOOD:
                 if goal == GET_FOOD:
                     move_rank[move] = 10
                 else:
                     move_rank[move] = -5
-                continue
+            if self.is_empty(new_x, new_y):
+                move_rank[move] = 0
+            if self.has_snake(new_x, new_y):
+                move_rank[move] = -100
+            if self.is_close_to_other_head(new_x, new_y):
+                move_rank[move] -= 5
         return move_rank
         
     def get_best_move(self):
