@@ -121,7 +121,7 @@ class Game:
                 if goal == GET_FOOD:
                     move_rank[move] = 10
                 else:
-                    move_rank[move] = -1
+                    move_rank[move] = 0
             if self.is_close_to_other_head(new_x, new_y):
                 print(f'{move}=({new_x}, {new_y}) is close to other head')
                 move_rank[move] -= 2
@@ -139,7 +139,10 @@ class Game:
         
     def get_best_move(self):
         self.print_board()
-        moves = self.rank_moves()
+        goal = STAY_ALIVE
+        if self.my_health < 50:
+            goal = GET_FOOD
+        moves = self.rank_moves(goal=goal)
         best_moves = sorted(moves.items(), key=lambda m: -m[1])
         print(best_moves)
         return best_moves[0][0]
