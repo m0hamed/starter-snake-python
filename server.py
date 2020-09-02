@@ -10,16 +10,16 @@ class Battlesnake(object):
     def index(self):
         return {
             "apiversion": "1",
-            "author": "mheikal",  # TODO: Your Battlesnake Username
-            "color": "#888888",  # TODO: Personalize
-            "head": "default",  # TODO: Personalize
-            "tail": "default",  # TODO: Personalize
+            "author": "mheikal",
+            "color": "#00ffff", 
+            "head": "silly",
+            "tail": "freckle",
         }
 
     @cherrypy.expose
     @cherrypy.tools.json_in()
     def start(self):
-        data = cherrypy.request.json
+        #data = cherrypy.request.json
 
         print("START")
         return "ok"
@@ -38,7 +38,7 @@ class Battlesnake(object):
     @cherrypy.expose
     @cherrypy.tools.json_in()
     def end(self):
-        data = cherrypy.request.json
+        #data = cherrypy.request.json
 
         print("END")
         return "ok"
