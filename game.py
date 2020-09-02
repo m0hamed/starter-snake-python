@@ -81,21 +81,23 @@ class Game:
         visited = get_empty_board(len(board))
         for pos in food_pos:
             x, y = (pos['x'], pos['y'])
-            queue.append((x, y))
+            queue.append((x, y, 0))
             self.set_at(x, y, 0, board=board)
             self.set_at(x, y, 1, board=visited)
 
-        def bfs(q, distance):
-            x, y = q.pop(0)
+        def bfs(q):
+            x, y, distance = q.pop(0)
             for move, delta in POSSIBLE_MOVES.items():
                 new_x = x + delta[0]
                 new_y = y + delta[1]
                 if self.is_out_of_bounds(new_x, new_y):
                     continue
                 if not self.get_at(new_x, new_y, board=visited):
-                    self.set_at(x, y, distance, board=board)
+                    self.set_at(x, y, distance+1, board=board)
                     self.set_at(x, y, 1, board=visited)
-                    q.append((new_x, new_y))
+                    q.append((new_x, new_y, distance+1))
+            if q:
+                bfs(q)
         bfs(queue, 1)
 
     def _add_snakes(self, snakes):
