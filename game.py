@@ -120,13 +120,10 @@ class Game:
                 if goal == GET_FOOD:
                     move_rank[move] = 10
                 else:
-                    move_rank[move] = -5
-            #if self.is_empty(new_x, new_y):
-            #    print(f'{move}=({new_x}, {new_y}) is empty')
-            #    move_rank[move] = 0
+                    move_rank[move] = -1
             if self.is_close_to_other_head(new_x, new_y):
                 print(f'{move}=({new_x}, {new_y}) is close to other head')
-                move_rank[move] -= 5
+                move_rank[move] -= 2
         return move_rank
 
     def print_board(self):
