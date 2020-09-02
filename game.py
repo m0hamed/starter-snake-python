@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 
-from collections import namedtuple
-
 DEBUG = True
 
 SNAKE = 1 << 1
@@ -115,8 +113,8 @@ class Game:
         self.my_snake = snake
 
     def to_board_idx(self, x, y):
-        board_y = self.board_size - y - 1
-        board_x = x - 1
+        board_y = self.board_size - y
+        board_x = x
         return board_y, board_x
 
     def set_at(self, x, y, value, append=False, board=None):
