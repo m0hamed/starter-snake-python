@@ -1,4 +1,5 @@
 import os
+import time
 
 import cherrypy
 
@@ -28,9 +29,12 @@ class Battlesnake(object):
     @cherrypy.tools.json_in()
     @cherrypy.tools.json_out()
     def move(self):
+        start = time.time()
         data = cherrypy.request.json
 
         move = Game(data).get_best_move()
+        end = time.time()
+        print(f'elapsed time: {end-start}')
 
         print(f"MOVE: {move}")
         return {"move": move}
