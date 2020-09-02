@@ -127,4 +127,5 @@ class Game:
         moves = self.rank_moves()
         best_moves = sorted(moves.items(), key=lambda m: -m[1])
         print(best_moves)
+        return 'right'
         return best_moves[0][0]
