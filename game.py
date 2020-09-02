@@ -83,7 +83,7 @@ class Game:
         return self.get_at(x, y) == 0
 
     def has_snake(self, x, y):
-        return self.get_at(x, y) == SNAKE
+        return bool(self.get_at(x, y) & SNAKE)
     
     def is_close_to_other_head(self, x, y):
         for move, delta in POSSIBLE_MOVES.items():
@@ -92,7 +92,7 @@ class Game:
             if self.is_out_of_bounds(new_x, new_y):
                 continue
             value = self.get_at(new_x, new_y)
-            if value & HEAD and not value & MY_SNAKE:
+            if value & HEAD and not (value & MY_SNAKE):
                 return True
 
     def rank_moves(self, goal=STAY_ALIVE):
@@ -100,6 +100,7 @@ class Game:
         for move, delta in POSSIBLE_MOVES.items():
             new_x = self.my_head_x + delta[0]
             new_y = self.my_head_y + delta[1]
+            move_rank[move] = 0
             if self.is_out_of_bounds(new_x, new_y):
                 print(f'{move}=({new_x}, {new_y}) is out of bounds')
                 move_rank[move] = -100
