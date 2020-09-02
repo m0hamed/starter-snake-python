@@ -16,6 +16,12 @@ POSSIBLE_MOVES = {
 STAY_ALIVE = 0
 GET_FOOD = 1
 
+def get_empty_board(board_size):
+    board = []
+    for _ in range(board_size):
+        board.append([0]*board_size)
+    return board
+
 class Game:
     def __init__(self, game_state):
         self.my_head_x = None
@@ -23,7 +29,7 @@ class Game:
         self.my_snake = None
         self.my_health = None
         self.board_size = game_state['board']['height']
-        self.board = [[0]*self.board_size]*self.board_size
+        self.board = get_empty_board(self.board_size)
         self._add_food(game_state['board']['food'])
         self._add_snakes(game_state['board']['snakes'])
         self._set_my_snake(game_state['you'])
