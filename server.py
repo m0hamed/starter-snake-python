@@ -13,7 +13,7 @@ class Battlesnake(object):
             "author": "mheikal",
             "color": "#00ffff", 
             "head": "silly",
-            "tail": "freckle",
+            "tail": "bwc-ice-skate",
         }
 
     @cherrypy.expose
