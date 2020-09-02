@@ -127,7 +127,7 @@ class Game:
         for i in range(len(self.board)):
             for j in range(len(self.board[i])):
                 print('{:2d},'.format(self.board[i][j]), end='')
-        print()
+            print()
         
     def get_best_move(self):
         self.print_board()
