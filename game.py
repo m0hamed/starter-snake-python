@@ -132,7 +132,11 @@ class Game:
     def print_board(self):
         for i in range(len(self.board)):
             for j in range(len(self.board[i])):
-                print('{:2d},'.format(self.board[i][j]), end='')
+                if self.board[i][j] & (MY_SNAKE | HEAD):
+                    pos = '  X'
+                else:
+                    pos = '{:3d},'.format(self.board[i][j])
+                print(pos, end='')
             print()
         
     def get_best_move(self):
