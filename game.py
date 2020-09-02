@@ -122,8 +122,15 @@ class Game:
                 print(f'{move}=({new_x}, {new_y}) is close to other head')
                 move_rank[move] -= 5
         return move_rank
+
+    def print_board(self):
+        for i in range(len(board)):
+            for j in range(len(board[i])):
+                print('{:2d},'.format(board[i][j]), end='')
+        print()
         
     def get_best_move(self):
+        self.print_board()
         moves = self.rank_moves()
         best_moves = sorted(moves.items(), key=lambda m: -m[1])
         print(best_moves)
