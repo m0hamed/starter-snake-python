@@ -1,9 +1,8 @@
 import os
-import random
 
 import cherrypy
 
-import game
+from game import Game
 
 class Battlesnake(object):
     @cherrypy.expose
