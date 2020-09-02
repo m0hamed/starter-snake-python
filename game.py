@@ -101,21 +101,27 @@ class Game:
             new_x = self.my_head_x + delta[0]
             new_y = self.my_head_y + delta[1]
             if self.is_out_of_bounds(new_x, new_y):
+                print(f'{move}=({new_x}, {new_y}) is out of bounds')
                 move_rank[move] = -100
             if self.get_at(new_x, new_y) & FOOD:
+                print(f'{move}=({new_x}, {new_y}) has food')
                 if goal == GET_FOOD:
                     move_rank[move] = 10
                 else:
                     move_rank[move] = -5
             if self.is_empty(new_x, new_y):
+                print(f'{move}=({new_x}, {new_y}) is empty')
                 move_rank[move] = 0
             if self.has_snake(new_x, new_y):
+                print(f'{move}=({new_x}, {new_y}) has snake')
                 move_rank[move] = -100
             if self.is_close_to_other_head(new_x, new_y):
+                print(f'{move}=({new_x}, {new_y}) is close to other head')
                 move_rank[move] -= 5
         return move_rank
         
     def get_best_move(self):
         moves = self.rank_moves()
-        best_move = sorted(moves.items(), key=lambda m: -m[1])
-        return best_move[0][0]
+        best_moves = sorted(moves.items(), key=lambda m: -m[1])
+        print(best_moves)
+        return best_moves[0][0]
