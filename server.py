@@ -12,7 +12,7 @@ class Battlesnake(object):
         return {
             "apiversion": "1",
             "author": "mheikal",
-            "color": "#00ffff", 
+            "color": "#00eeff", 
             "head": "silly",
             "tail": "bwc-ice-skate",
         }
