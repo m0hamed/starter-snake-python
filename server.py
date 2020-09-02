@@ -3,6 +3,8 @@ import random
 
 import cherrypy
 
+import game
+
 class Battlesnake(object):
     @cherrypy.expose
     @cherrypy.tools.json_out()
