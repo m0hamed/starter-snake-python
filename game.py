@@ -124,9 +124,9 @@ class Game:
         return move_rank
 
     def print_board(self):
-        for i in range(len(board)):
-            for j in range(len(board[i])):
-                print('{:2d},'.format(board[i][j]), end='')
+        for i in range(len(self.board)):
+            for j in range(len(self.board[i])):
+                print('{:2d},'.format(self.board[i][j]), end='')
         print()
         
     def get_best_move(self):
