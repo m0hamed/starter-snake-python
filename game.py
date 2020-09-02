@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import time
 
 DEBUG = True
 
@@ -38,6 +39,7 @@ def clone_board(old_board):
 
 
 def flood_count(real_board, x, y):
+    s = time.time()
     R = C = len(real_board)
     fake_board = clone_board(real_board)
     if fake_board[x][y] > 0: return 0
@@ -53,7 +55,9 @@ def flood_count(real_board, x, y):
             if c + 1 < C: count += dfs(r, c + 1)
         return count
 
-    return dfs(x, y)
+    ret = dfs(x, y)
+    print(f'flood_count elapsted time: {time.time()-s}')
+    return ret
 
 
 class Game:
@@ -75,6 +79,7 @@ class Game:
         self.flood_fill(self.food_board, food_pos)
 
     def flood_fill(self, board, food_pos):
+        s = time.time()
         queue = []
         visited = get_empty_board(len(board))
         for pos in food_pos:
@@ -96,6 +101,7 @@ class Game:
                         self.set_at(x, y, 1, board=visited)
                         q.append((new_x, new_y, distance+1))
         bfs(queue)
+        print(f'flood_fill elapsted time: {time.time()-s}')
 
     def _add_snakes(self, snakes):
         for snake in snakes:
@@ -190,6 +196,7 @@ class Game:
         return possible_moves
 
     def rank_moves(self, goal=STAY_ALIVE):
+        s = time.time()
         move_rank = {}
         for move, (new_x, new_y) in self.get_possible_moves().items():
             print(f'possible move {move}=({new_x}, {new_y})')
@@ -209,6 +216,7 @@ class Game:
             else:
                 ranking_tuple = (-count_open_squares, close_to_wall + food_distance, 0, close_to_other_head)
             move_rank[move] = ranking_tuple
+        print(f'rank_moves elapsted time: {time.time()-s}')
         return move_rank
 
     def count_open_squares(self, x, y):
