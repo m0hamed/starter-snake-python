@@ -82,7 +82,7 @@ class Game:
     def is_empty(self, x, y):
         return self.get_at(x, y) == 0
     
-    def rank_moves(self, goal=STAY_ALIVE)
+    def rank_moves(self, goal=STAY_ALIVE):
         move_rank = {}
         for move, delta in POSSIBLE_MOVES.items():
             new_x = self.my_head_x + delta[0]
@@ -99,8 +99,9 @@ class Game:
                 else:
                     move_rank[move] = -5
                 continue
+        return move_rank
         
     def get_best_move(self):
         moves = self.rank_moves()
         best_move = sorted(moves.items(), key=lambda m: -m[1])
-        return best_move[0]
+        return best_move[0][0]
