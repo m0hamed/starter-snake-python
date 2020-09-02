@@ -2,8 +2,8 @@
 
 from collections import namedtuple
 
-DEFAULT_BOARD_SIZE = 11
-# FOOD has to be lowest for easy flood_fill
+DEBUG = True
+
 SNAKE = 1 << 1
 HEAD = 1 << 2
 MY_SNAKE = 1 << 3
@@ -17,6 +17,11 @@ POSSIBLE_MOVES = {
 
 STAY_ALIVE = 0
 STARVING = 1
+
+original_print = print
+def print(*args, **kwargs):
+    if DEBUG:
+        original_print(*args, **kwargs)
 
 
 def get_empty_board(board_size, fill=0):
@@ -162,6 +167,15 @@ class Game:
                 count += 1
         return count
 
+    def is_close_to_wall(self, x, y):
+        count = 0
+        for move, delta in POSSIBLE_MOVES.items():
+            new_x = x + delta[0]
+            new_y = y + delta[1]
+            if self.is_out_of_bounds(new_x, new_y):
+                count +=1
+        return count
+
     def get_possible_moves(self):
         possible_moves = {}
         for move, delta in POSSIBLE_MOVES.items():
@@ -185,32 +199,39 @@ class Game:
             close_to_other_head = self.is_close_to_other_head(new_x, new_y)
             if close_to_other_head:
                 print(f'{move}=({new_x}, {new_y}) is close to other head')
+            close_to_wall = self.is_close_to_wall(new_x, new_y)
+            print(f'{move}=({new_x}, {new_y}) is close to {close_to_wall} walls')
             count_open_squares = self.count_open_squares(new_x, new_y)
             print(
                 f'{move}=({new_x}, {new_y}) has {count_open_squares} open squares'
             )
             if goal==STARVING:
-                ranking_tuple = (food_distance, -count_open_squares, close_to_other_head)
+                ranking_tuple = (food_distance, -count_open_squares, close_to_wall, close_to_other_head)
             else:
-                ranking_tuple = (-count_open_squares, food_distance, close_to_other_head)
+                ranking_tuple = (-count_open_squares, close_to_wall, food_distance, close_to_other_head)
             move_rank[move] = ranking_tuple
         return move_rank
 
     def count_open_squares(self, x, y):
         return flood_count(self.board, x, y)
 
-    def print_board(self):
-        for i in range(len(self.board)):
-            for j in range(len(self.board[i])):
-                if self.board[i][j] & (MY_SNAKE | HEAD) == (MY_SNAKE | HEAD):
+    def print_board(self, board=None):
+        if board is None:
+            board = self.board
+        for i in range(len(board)):
+            for j in range(len(board[i])):
+                if board[i][j] & (MY_SNAKE | HEAD) == (MY_SNAKE | HEAD):
                     pos = '  X'
                 else:
-                    pos = '{:3d},'.format(self.board[i][j])
+                    pos = '{:3d},'.format(board[i][j])
                 print(pos, end='')
             print()
 
     def get_best_move(self):
-        self.print_board()
+        print('Food Board:')
+        self.print_board(board = self.food_board)
+        print('Game Board:')
+        self.print_board(board = self.board)
         goal = STAY_ALIVE
         if self.my_health < 20:
             goal = STARVING
