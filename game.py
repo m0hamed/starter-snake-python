@@ -49,10 +49,10 @@ def flood_count(real_board, x, y):
         if fake_board[r][c] == 0:
             fake_board[r][c] = 1
             count += 1
-            if r >= 1: count += dfs(r - 1, c)
-            if r + 1 < R: count += dfs(r + 1, c)
-            if c >= 1: count += dfs(r, c - 1)
-            if c + 1 < C: count += dfs(r, c + 1)
+            if r >= 1 and fake_board[r - 1][c] == 0: count += dfs(r - 1, c)
+            if r + 1 < R and fake_board[r + 1][c] == 0: count += dfs(r + 1, c)
+            if c >= 1 and fake_board[r][c - 1] == 0: count += dfs(r, c - 1)
+            if c + 1 < C and fake_board[r][c + 1] == 0: count += dfs(r, c + 1)
         return count
 
     ret = dfs(x, y)
