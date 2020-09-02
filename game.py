@@ -216,13 +216,13 @@ class Game:
     def count_open_squares(self, x, y):
         return flood_count(self.board, x, y)
 
-    def print_board(self, board=None):
+    def print_board(self, show_head=True, board=None):
         if board is None:
             board = self.board
         for i in range(len(board)):
             for j in range(len(board[i])):
-                if board[i][j] & (MY_SNAKE | HEAD) == (MY_SNAKE | HEAD):
-                    pos = '  X'
+                if show_head and board[i][j] & (MY_SNAKE | HEAD) == (MY_SNAKE | HEAD):
+                    pos = '  X,'
                 else:
                     pos = '{:3d},'.format(board[i][j])
                 print(pos, end='')
@@ -230,8 +230,9 @@ class Game:
 
     def get_best_move(self):
         print('Food Board:')
-        self.print_board(board = self.food_board)
+        self.print_board(show_head = False, board = self.food_board)
         print('Game Board:')
+        print(f'I am at ({self.my_head_x}, {self.my_head_y})')
         self.print_board(board = self.board)
         goal = STAY_ALIVE
         if self.my_health < 20:
