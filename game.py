@@ -132,7 +132,7 @@ class Game:
     def print_board(self):
         for i in range(len(self.board)):
             for j in range(len(self.board[i])):
-                if self.board[i][j] & (MY_SNAKE | HEAD):
+                if self.board[i][j] & (MY_SNAKE | HEAD) == (MY_SNAKE | HEAD):
                     pos = '  X'
                 else:
                     pos = '{:3d},'.format(self.board[i][j])
