@@ -113,7 +113,7 @@ class Game:
         self.my_snake = snake
 
     def to_board_idx(self, x, y):
-        board_y = self.board_size - y
+        board_y = self.board_size - y - 1
         board_x = x
         return board_y, board_x
 
