@@ -3,7 +3,7 @@
 DEFAULT_BOARD_SIZE = 11
 FOOD = 1 << 0
 SNAKE = 1 << 1
-IS_HEAD = 1 << 2
+HEAD = 1 << 2
 MY_SNAKE = 1 << 3
 
 POSSIBLE_MOVES = {
