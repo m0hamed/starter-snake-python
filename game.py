@@ -13,6 +13,9 @@ POSSIBLE_MOVES = {
     'right': (1,0),
 }
 
+STAY_ALIVE = 0
+GET_FOOD = 1
+
 class Game:
     def __init__(self, game_state):
         self.my_head_x = None
@@ -78,6 +81,26 @@ class Game:
     
     def is_empty(self, x, y):
         return self.get_at(x, y) == 0
+    
+    def rank_moves(self, goal=STAY_ALIVE)
+        move_rank = {}
+        for move, delta in POSSIBLE_MOVES.items():
+            new_x = self.my_head_x + delta[0]
+            new_y = self.my_head_y + delta[1]
+            if self.is_out_of_bounds(new_x, new_y):
+                move_rank[move] = -100
+                continue
+            if self.is_empty(new_x, new_y):
+                move_rank[move] = 0
+                continue
+            if self.get_at(new_x, new_y) & FOOD:
+                if goal == GET_FOOD:
+                    move_rank[move] = 10
+                else:
+                    move_rank[move] = -5
+                continue
         
     def get_best_move(self):
-        return self.get_safe_move()
+        moves = self.rank_moves()
+        best_move = sorted(moves.items(), key=lambda m: -m[1])
+        return best_move[0]
